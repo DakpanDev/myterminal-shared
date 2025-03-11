@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -25,7 +26,16 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            // Contains your multiplatform dependencies
+            implementation(libs.koin.annotations)
+            implementation(libs.koin.core)
+
+            implementation(libs.ktor.core)
+            implementation(libs.ktor.cio)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization)
+
+            implementation(libs.room.runtime)
+            implementation(libs.room.kotlin.extensions)
         }
     }
 }
