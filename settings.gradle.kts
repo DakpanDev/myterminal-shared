@@ -70,4 +70,4 @@ dependencyResolutionManagement {
 pluginManagement.repositories.m2ciPlugin()
 
 rootProject.name = "MyTerminal-Shared"
-include(":app")
+include(":myterminal-shared")
