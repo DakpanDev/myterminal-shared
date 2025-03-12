@@ -19,7 +19,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "Shared"
+            baseName = "Shared-Domain"
             isStatic = true
         }
     }
@@ -36,11 +36,6 @@ kotlin {
 android {
     namespace = "com.moveagency.myterminal.domain"
     compileSdk = 35
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
 
     defaultConfig {
         minSdk = 26

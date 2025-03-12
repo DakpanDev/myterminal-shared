@@ -39,11 +39,6 @@ android {
     namespace = "com.moveagency.myterminal.shared"
     compileSdk = 35
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
     defaultConfig {
         minSdk = 26
     }
