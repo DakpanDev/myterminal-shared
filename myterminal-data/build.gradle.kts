@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.ksp)
+    alias(shared.plugins.kotlin.multiplatform)
+    alias(shared.plugins.android.library)
+    alias(shared.plugins.ksp)
 }
 
 kotlin {
@@ -28,17 +28,17 @@ kotlin {
         commonMain.dependencies {
             implementation(project(":myterminal-domain"))
 
-            implementation(libs.koin.annotations)
-            implementation(libs.koin.core)
+            implementation(shared.koin.annotations)
+            implementation(shared.koin.core)
 
-            implementation(libs.ktor.core)
-            implementation(libs.ktor.cio)
-            implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.ktor.serialization)
+            implementation(shared.ktor.core)
+            implementation(shared.ktor.cio)
+            implementation(shared.ktor.client.content.negotiation)
+            implementation(shared.ktor.serialization)
 
             // TODO
-            // implementation(libs.room.runtime)
-            // implementation(libs.room.kotlin.extensions)
+            // implementation(shared.room.runtime)
+            // implementation(shared.room.kotlin.extensions)
         }
     }
 }
@@ -58,5 +58,5 @@ android {
 }
 
 dependencies {
-    ksp(libs.room.compiler)
+    ksp(shared.room.compiler)
 }

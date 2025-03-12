@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.ksp)
+    alias(shared.plugins.kotlin.multiplatform)
+    alias(shared.plugins.android.library)
+    alias(shared.plugins.ksp)
 }
 
 kotlin {
@@ -27,8 +27,8 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
 
-            implementation(libs.koin.annotations)
-            implementation(libs.koin.core)
+            implementation(shared.koin.annotations)
+            implementation(shared.koin.core)
         }
     }
 }
