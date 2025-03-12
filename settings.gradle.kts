@@ -71,3 +71,5 @@ pluginManagement.repositories.m2ciPlugin()
 
 rootProject.name = "MyTerminal-Shared"
 include(":myterminal-shared")
+include(":myterminal-domain")
+include(":myterminal-data")

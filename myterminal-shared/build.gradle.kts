@@ -26,6 +26,9 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            api(project(":myterminal-domain"))
+            api(project(":myterminal-data"))
+
             implementation(libs.koin.annotations)
             implementation(libs.koin.core)
 
