@@ -5,7 +5,6 @@ koin = "4.0.2"
 koin-annotations = "2.0.0-RC1"
 ksp = "2.1.10-1.0.29"
 ktor = "3.0.3"
-jetbrainsKotlinJvm = "1.9.24"
 room = "2.6.1"
 
 [libraries]
@@ -24,4 +23,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

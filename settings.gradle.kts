@@ -73,3 +73,11 @@ rootProject.name = "MyTerminal-Shared"
 include(":myterminal-shared")
 include(":myterminal-domain")
 include(":myterminal-data")
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("shared") {
+            from(files("gradle/libs.versions.toml"))
+        }
+    }
+}
