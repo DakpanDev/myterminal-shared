@@ -1,0 +1,12 @@
+package com.moveagency.myterminal.domain.bookmarks
+
+import com.moveagency.myterminal.domain.generic.repository.FlightsRepository
+import org.koin.core.annotation.Factory
+
+@Factory
+class ObserveBookmark(
+    private val repository: FlightsRepository,
+) {
+
+    operator fun invoke(flightId: String) = repository.observeBookmark(flightId)
+}

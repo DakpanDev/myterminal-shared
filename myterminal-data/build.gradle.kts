@@ -9,36 +9,34 @@ plugins {
 kotlin {
     androidTarget {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget = JvmTarget.JVM_11
         }
     }
 
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "Shared-Domain"
-            isStatic = true
-        }
-    }
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
     sourceSets {
-        commonMain.dependencies {
-            implementation(project(":myterminal-domain"))
+        val commonMain by getting {
+            dependencies {
+                implementation(project(":myterminal-domain"))
 
-            implementation(shared.koin.annotations)
-            implementation(shared.koin.core)
+                implementation(shared.kotlinx.coroutines)
+                implementation(shared.kotlinx.datetime)
 
-            implementation(shared.ktor.core)
-            implementation(shared.ktor.cio)
-            implementation(shared.ktor.client.content.negotiation)
-            implementation(shared.ktor.serialization)
+                implementation(shared.koin.annotations)
+                implementation(shared.koin.core)
 
-            // TODO
-            // implementation(shared.room.runtime)
-            // implementation(shared.room.kotlin.extensions)
+                implementation(shared.ktor.core)
+                implementation(shared.ktor.cio)
+                implementation(shared.ktor.client.content.negotiation)
+                implementation(shared.ktor.serialization)
+
+                // TODO
+                // implementation(shared.room.runtime)
+                // implementation(shared.room.kotlin.extensions)
+            }
         }
     }
 }

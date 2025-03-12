@@ -13,22 +13,19 @@ kotlin {
         }
     }
 
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "Shared-Domain"
-            isStatic = true
-        }
-    }
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
     sourceSets {
-        commonMain.dependencies {
+        val commonMain by getting {
+            dependencies {
+                implementation(shared.kotlinx.coroutines)
+                implementation(shared.kotlinx.datetime)
 
-            implementation(shared.koin.annotations)
-            implementation(shared.koin.core)
+                implementation(shared.koin.annotations)
+                implementation(shared.koin.core)
+            }
         }
     }
 }
@@ -36,6 +33,11 @@ kotlin {
 android {
     namespace = "com.moveagency.myterminal.domain"
     compileSdk = 35
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
 
     defaultConfig {
         minSdk = 26
