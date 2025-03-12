@@ -31,14 +31,6 @@ kotlin {
 
             implementation(libs.koin.annotations)
             implementation(libs.koin.core)
-
-            implementation(libs.ktor.core)
-            implementation(libs.ktor.cio)
-            implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.ktor.serialization)
-
-            implementation(libs.room.runtime)
-            implementation(libs.room.kotlin.extensions)
         }
     }
 }
