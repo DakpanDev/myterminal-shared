@@ -2,8 +2,15 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(shared.plugins.kotlin.multiplatform)
+    alias(shared.plugins.kotlin.serialization)
     alias(shared.plugins.android.library)
     alias(shared.plugins.ksp)
+    alias(shared.plugins.room)
+}
+
+repositories {
+    google()
+    mavenCentral()
 }
 
 kotlin {
@@ -33,9 +40,28 @@ kotlin {
                 implementation(shared.ktor.client.content.negotiation)
                 implementation(shared.ktor.serialization)
 
-                // TODO
-                // implementation(shared.room.runtime)
-                // implementation(shared.room.kotlin.extensions)
+                implementation(shared.room.runtime)
+            }
+        }
+
+        val androidMain by getting {
+            dependencies {
+                implementation(shared.ktor.android)
+
+                implementation(shared.room.runtime.android)
+            }
+        }
+
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+        val iosMain by creating {
+            dependsOn(commonMain)
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation(shared.ktor.ios)
             }
         }
     }
@@ -53,6 +79,10 @@ android {
     defaultConfig {
         minSdk = 26
     }
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 dependencies {

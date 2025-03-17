@@ -1,7 +1,6 @@
 @file:OptIn(ExperimentalCoroutinesApi::class)
 package com.moveagency.myterminal.data.home
 
-import android.util.Log
 import com.moveagency.myterminal.data.generic.datastore.DestinationsDataStore
 import com.moveagency.myterminal.data.generic.datastore.FlightsDataStore
 import com.moveagency.myterminal.data.generic.mapper.FlightsResponseMapper
@@ -59,14 +58,14 @@ class FlightsRepositoryImpl(
         }
     }
 
-    override fun observeAllBookmarks() = flightsDatastore.observeBookmarks()
+    override suspend fun observeAllBookmarks() = flightsDatastore.observeBookmarks()
 
-    override fun observeBookmark(id: String) = flightsDatastore.observeBookmarks().flatMapLatest {
+    override suspend fun observeBookmark(id: String) = flightsDatastore.observeBookmarks().flatMapLatest {
         val flight = it.firstOrNull { flight -> flight.id == id }
         if (flight != null) flow { emit(flight) } else emptyFlow()
     }
 
-    override fun bookmarkFlight(id: String) {
+    override suspend fun bookmarkFlight(id: String) {
         val flight = flightsDatastore.getFlightDetails(id)
             ?: error("Flight with id $id could not be found")
         val date = flight.departureDateTime.date
@@ -76,7 +75,7 @@ class FlightsRepositoryImpl(
             ?.also { flightsDatastore.updateFlights(date, it) }
     }
 
-    override fun unBookmarkFlight(id: String) {
+    override suspend fun unBookmarkFlight(id: String) {
         val flight = flightsDatastore.getBookmarkedDetails(id)
             ?: error("Bookmarked flight with id $id could not be found")
         val date = flight.departureDateTime.date
@@ -86,7 +85,7 @@ class FlightsRepositoryImpl(
             ?.let { flightsDatastore.updateFlights(date, it) }
     }
 
-    private fun getAllBookmarked() = flightsDatastore.getAllBookmarked()
+    private suspend fun getAllBookmarked() = flightsDatastore.getAllBookmarked()
 
     private suspend fun getDestination(iata: String): String {
         val storedDestination = destinationsDataStore.getDestinationValue(iata)
@@ -103,7 +102,6 @@ class FlightsRepositoryImpl(
                 destinationsDataStore.storeDestination(iata, it)
             }
         } catch (exception: Exception) {
-            Log.w(javaClass.simpleName, "An error occurred while fetching $iata")
             iata
         }
 

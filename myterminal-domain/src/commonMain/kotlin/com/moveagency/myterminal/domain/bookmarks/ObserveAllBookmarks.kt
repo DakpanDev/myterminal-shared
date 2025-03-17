@@ -8,5 +8,5 @@ class ObserveAllBookmarks(
     private val repository: FlightsRepository,
 ) {
 
-    operator fun invoke() = repository.observeAllBookmarks()
+    suspend operator fun invoke() = repository.observeAllBookmarks()
 }

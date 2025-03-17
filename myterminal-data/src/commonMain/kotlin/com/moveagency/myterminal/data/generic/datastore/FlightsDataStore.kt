@@ -15,11 +15,11 @@ interface FlightsDataStore {
     fun getFlightDetails(id: String): Flight?
     fun getBookmarkedDetails(id: String): Flight?
 
-    fun observeBookmarks(): Flow<List<Flight>>
-    fun getAllBookmarked(): List<Flight>
+    suspend fun observeBookmarks(): Flow<List<Flight>>
+    suspend fun getAllBookmarked(): List<Flight>
 
-    fun bookmarkFlight(flight: Flight)
-    fun unBookmarkFlight(flight: Flight)
+    suspend fun bookmarkFlight(flight: Flight)
+    suspend fun unBookmarkFlight(flight: Flight)
 
     fun getHighestPage(date: LocalDate): Int?
     fun incrementPage(date: LocalDate)

@@ -11,8 +11,8 @@ interface FlightsRepository {
     suspend fun observeFlights(date: LocalDate): Flow<List<Flight>>
     fun observeFlightDetails(id: String): Flow<Flight>
 
-    fun observeAllBookmarks(): Flow<List<Flight>>
-    fun observeBookmark(id: String): Flow<Flight>
-    fun bookmarkFlight(id: String)
-    fun unBookmarkFlight(id: String)
+    suspend fun observeAllBookmarks(): Flow<List<Flight>>
+    suspend fun observeBookmark(id: String): Flow<Flight>
+    suspend fun bookmarkFlight(id: String)
+    suspend fun unBookmarkFlight(id: String)
 }

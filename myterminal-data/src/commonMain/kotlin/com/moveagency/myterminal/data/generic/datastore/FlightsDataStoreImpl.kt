@@ -4,8 +4,8 @@ import com.moveagency.myterminal.data.database.MyTerminalDatabase
 import com.moveagency.myterminal.data.database.mapper.FlightsEntityMapper
 import com.moveagency.myterminal.data.generic.datastore.model.FlightsCache
 import com.moveagency.myterminal.domain.generic.model.Flight
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.*
 import kotlinx.datetime.LocalDate
 import org.koin.core.annotation.Singleton
 
@@ -17,10 +17,8 @@ class FlightsDataStoreImpl(
 
     private val cachedPages = mutableMapOf<LocalDate, Int?>()
     private val cachedFlights = MutableStateFlow<FlightsCache>(mapOf())
-    private val bookmarkedFlights by lazy {
-        val flights = database.flightsDao().getAll().map(mapper::mapEntityToFlight)
-        MutableStateFlow(flights)
-    }
+    private val bookmarkedFlights = MutableStateFlow<List<Flight>>(emptyList())
+    private var retrievedBookmarks = false
 
     override fun updateFlights(date: LocalDate, flights: List<Flight>) {
         val newFlights = cachedFlights.value.toMutableMap()
@@ -44,24 +42,31 @@ class FlightsDataStoreImpl(
         return bookmarkedFlights.value.firstOrNull { it.id == id }
     }
 
-    override fun observeBookmarks() = bookmarkedFlights
+    override suspend fun observeBookmarks(): Flow<List<Flight>> {
+        if (!retrievedBookmarks) {
+            val flights = database.flightsDao().getAll().map(mapper::mapEntityToFlight)
+            bookmarkedFlights.value = flights
+        }
 
-    override fun getAllBookmarked() = database.flightsDao()
+        return bookmarkedFlights
+    }
+
+    override suspend fun getAllBookmarked() = database.flightsDao()
         .getAll()
         .map(mapper::mapEntityToFlight)
 
-    override fun bookmarkFlight(flight: Flight) = flight
-        .let(mapper::mapFlightToEntity)
-        .let(database.flightsDao()::insertFlight)
-        .also { bookmarkedFlights.value = getAllBookmarked() }
+    override suspend fun bookmarkFlight(flight: Flight) {
+        val entity = mapper.mapFlightToEntity(flight)
+        database.flightsDao().insertFlight(entity)
+        bookmarkedFlights.value = getAllBookmarked()
+    }
 
-    override fun unBookmarkFlight(flight: Flight) = flight
-        .let(mapper::mapFlightToEntity)
-        .let(database.flightsDao()::delete)
-        .also {
-            val newCache = getAllBookmarked() + flight.copy(isBookmarked = false)
-            bookmarkedFlights.value = newCache
-        }
+    override suspend fun unBookmarkFlight(flight: Flight) {
+        val entity = mapper.mapFlightToEntity(flight)
+        database.flightsDao().delete(entity)
+        val newCache = getAllBookmarked() + flight.copy(isBookmarked = false)
+        bookmarkedFlights.value = newCache
+    }
 
     override fun getHighestPage(date: LocalDate): Int? {
         return cachedPages[date]

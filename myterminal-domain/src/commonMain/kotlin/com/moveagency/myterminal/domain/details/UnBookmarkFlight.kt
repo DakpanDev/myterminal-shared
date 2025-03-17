@@ -8,5 +8,5 @@ class UnBookmarkFlight(
     private val repository: FlightsRepository,
 ) {
 
-    operator fun invoke(id: String) = repository.unBookmarkFlight(id)
+    suspend operator fun invoke(id: String) = repository.unBookmarkFlight(id)
 }

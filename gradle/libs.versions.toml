@@ -1,31 +1,35 @@
 [versions]
-agp = "8.8.0"
+agp = "8.8.2"
 kotlin = "2.1.10"
 koin = "4.0.2"
-koin-annotations = "2.0.0-RC1"
+koin-annotations = "2.0.0"
 kotlinx-coroutines = "1.10.1"
 kotlinx-datetime = "0.6.2"
-ksp = "2.1.10-1.0.29"
+ksp = "2.1.10-1.0.30"
 ktor = "3.0.3"
-room = "2.6.1"
+room = "2.7.0-rc02"
 
 [libraries]
 koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotations" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
-ktor-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
-ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-ios = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-room-kotlin-extensions = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-runtime-android = { module = "androidx.room:room-runtime-android", version.ref = "room" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+room = { id = "androidx.room", version.ref = "room" }

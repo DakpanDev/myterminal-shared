@@ -1,6 +1,5 @@
 package com.moveagency.myterminal.data.generic.remote
 
-import com.moveagency.myterminal.data.BuildConfig
 import com.moveagency.myterminal.data.generic.remote.response.DestinationResponse
 import com.moveagency.myterminal.data.generic.remote.response.FlightListResponse
 import io.ktor.client.HttpClient
@@ -47,8 +46,8 @@ class SchipholService(
         headers {
             append(HttpHeaders.Accept, "application/json")
             append(HeaderResourceVersion, "v4")
-            append(HeaderAppId, BuildConfig.AppId)
-            append(HeaderAppKey, BuildConfig.AppKey)
+            append(HeaderAppId, "0147f643") // TODO: secret
+            append(HeaderAppKey, "e82826afc37be84d56c108ba4d38d614") // TODO: secret
         }
         url {
             appendPathSegments(pathSegments)

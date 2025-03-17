@@ -9,11 +9,11 @@ class DestinationsDataStoreImpl(
     private val database: MyTerminalDatabase,
 ) : DestinationsDataStore {
 
-    override fun getDestinationValue(iata: String): String? {
+    override suspend fun getDestinationValue(iata: String): String? {
         return database.destinationsDao().findByIata(iata)?.value
     }
 
-    override fun storeDestination(iata: String, value: String) {
+    override suspend fun storeDestination(iata: String, value: String) {
         val entity = DestinationEntity(iata, value)
         database.destinationsDao().insertDestination(entity)
     }

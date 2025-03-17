@@ -7,14 +7,14 @@ import com.moveagency.myterminal.data.database.entity.FlightEntity
 interface FlightsDao {
 
     @Query("SELECT * FROM flight ORDER BY departure_datetime")
-    fun getAll(): List<FlightEntity>
+    suspend fun getAll(): List<FlightEntity>
 
     @Query("SELECT * FROM flight WHERE id = :flightId")
-    fun findById(flightId: String): FlightEntity?
+    suspend fun findById(flightId: String): FlightEntity?
 
     @Insert
-    fun insertFlight(flight: FlightEntity)
+    suspend fun insertFlight(flight: FlightEntity)
 
     @Delete
-    fun delete(flight: FlightEntity)
+    suspend fun delete(flight: FlightEntity)
 }
