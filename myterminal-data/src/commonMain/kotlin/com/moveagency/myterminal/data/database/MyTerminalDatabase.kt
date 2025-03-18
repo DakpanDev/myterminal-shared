@@ -1,7 +1,6 @@
 package com.moveagency.myterminal.data.database
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
+import androidx.room.*
 import com.moveagency.myterminal.data.database.dao.DestinationsDao
 import com.moveagency.myterminal.data.database.dao.FlightsDao
 import com.moveagency.myterminal.data.database.entity.DestinationEntity
@@ -14,6 +13,7 @@ import com.moveagency.myterminal.data.database.entity.FlightEntity
     ],
     version = 1,
 )
+@ConstructedBy(DatabaseFactory::class)
 abstract class MyTerminalDatabase : RoomDatabase() {
 
     abstract fun flightsDao(): FlightsDao

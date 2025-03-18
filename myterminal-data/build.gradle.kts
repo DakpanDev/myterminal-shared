@@ -68,7 +68,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.moveagency.myterminal.data"
+    namespace = "com.moveagency.myterminal"
     compileSdk = 35
 
     compileOptions {
@@ -86,5 +86,12 @@ room {
 }
 
 dependencies {
-    ksp(shared.room.compiler)
+
+    // Android
+    add("kspAndroid", shared.room.compiler)
+
+    // iOS
+    add("kspIosSimulatorArm64", shared.room.compiler)
+    add("kspIosX64", shared.room.compiler)
+    add("kspIosArm64", shared.room.compiler)
 }

@@ -31,7 +31,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.moveagency.myterminal.domain"
+    namespace = "com.moveagency.myterminal"
     compileSdk = 35
 
     compileOptions {
