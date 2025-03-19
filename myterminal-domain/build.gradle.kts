@@ -25,13 +25,6 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
-            dependencies {
-                implementation(shared.kotlinx.coroutines)
-                implementation(shared.kotlinx.datetime)
-
-                api(shared.koin.annotations)
-                implementation(shared.koin.core)
-            }
         }
     }
 }
@@ -53,6 +46,16 @@ android {
 }
 
 dependencies {
+
+    // KotlinX
+    commonMainImplementation(shared.kotlinx.coroutines)
+    commonMainImplementation(shared.kotlinx.datetime)
+
+    // Koin
+    commonMainApi(shared.koin.annotations)
+    commonMainImplementation(shared.koin.core)
+
+    // Koin compilation per platform
     add("kspCommonMainMetadata", shared.koin.compiler)
     add("kspAndroid", shared.koin.compiler)
     add("kspIosX64", shared.koin.compiler)

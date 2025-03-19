@@ -28,9 +28,6 @@ kotlin {
             dependencies {
                 api(project(":myterminal-domain"))
                 api(project(":myterminal-data"))
-
-                api(shared.koin.annotations)
-                implementation(shared.koin.core)
             }
         }
     }
@@ -53,6 +50,12 @@ android {
 }
 
 dependencies {
+
+    // Koin
+    commonMainApi(shared.koin.annotations)
+    commonMainImplementation(shared.koin.core)
+
+    // Koin compilation per platform
     add("kspCommonMainMetadata", shared.koin.compiler)
     add("kspAndroid", shared.koin.compiler)
     add("kspIosX64", shared.koin.compiler)

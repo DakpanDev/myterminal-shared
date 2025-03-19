@@ -34,19 +34,6 @@ kotlin {
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
             dependencies {
                 implementation(project(":myterminal-domain"))
-
-                implementation(shared.kotlinx.coroutines)
-                implementation(shared.kotlinx.datetime)
-
-                api(shared.koin.annotations)
-                implementation(shared.koin.core)
-
-                implementation(shared.ktor.core)
-                implementation(shared.ktor.cio)
-                implementation(shared.ktor.client.content.negotiation)
-                implementation(shared.ktor.serialization)
-
-                implementation(shared.room.runtime)
             }
         }
 
@@ -95,14 +82,30 @@ ksp { arg("KOIN_DEFAULT_MODULE", "false") }
 
 dependencies {
 
-    // Android
-    add("kspAndroid", shared.room.compiler)
+    // KotlinX
+    commonMainImplementation(shared.kotlinx.coroutines)
+    commonMainImplementation(shared.kotlinx.datetime)
 
-    // iOS
+    // Koin
+    commonMainApi(shared.koin.annotations)
+    commonMainImplementation(shared.koin.core)
+
+    // Ktor
+    commonMainImplementation(shared.ktor.core)
+    commonMainImplementation(shared.ktor.cio)
+    commonMainImplementation(shared.ktor.client.content.negotiation)
+    commonMainImplementation(shared.ktor.serialization)
+
+    // Room
+    commonMainImplementation(shared.room.runtime)
+
+    // Room compilation per platform
+    add("kspAndroid", shared.room.compiler)
     add("kspIosSimulatorArm64", shared.room.compiler)
     add("kspIosX64", shared.room.compiler)
     add("kspIosArm64", shared.room.compiler)
 
+    // Koin compilation per platform
     add("kspCommonMainMetadata", shared.koin.compiler)
     add("kspAndroid", shared.koin.compiler)
     add("kspIosX64", shared.koin.compiler)
