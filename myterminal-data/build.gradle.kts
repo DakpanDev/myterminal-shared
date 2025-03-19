@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     alias(shared.plugins.kotlin.multiplatform)
@@ -20,19 +21,24 @@ kotlin {
         }
     }
 
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+
     iosX64()
     iosArm64()
     iosSimulatorArm64()
 
     sourceSets {
         val commonMain by getting {
+            kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
             dependencies {
                 implementation(project(":myterminal-domain"))
 
                 implementation(shared.kotlinx.coroutines)
                 implementation(shared.kotlinx.datetime)
 
-                implementation(shared.koin.annotations)
+                api(shared.koin.annotations)
                 implementation(shared.koin.core)
 
                 implementation(shared.ktor.core)
@@ -85,6 +91,8 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 
+ksp { arg("KOIN_DEFAULT_MODULE", "false") }
+
 dependencies {
 
     // Android
@@ -94,4 +102,16 @@ dependencies {
     add("kspIosSimulatorArm64", shared.room.compiler)
     add("kspIosX64", shared.room.compiler)
     add("kspIosArm64", shared.room.compiler)
+
+    add("kspCommonMainMetadata", shared.koin.compiler)
+    add("kspAndroid", shared.koin.compiler)
+    add("kspIosX64", shared.koin.compiler)
+    add("kspIosArm64", shared.koin.compiler)
+    add("kspIosSimulatorArm64", shared.koin.compiler)
+}
+
+project.tasks.withType(KotlinCompilationTask::class.java).configureEach {
+    if(name != "kspCommonMainKotlinMetadata") {
+        dependsOn("kspCommonMainKotlinMetadata")
+    }
 }

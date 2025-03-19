@@ -3,6 +3,7 @@ agp = "8.8.2"
 kotlin = "2.1.10"
 koin = "4.0.2"
 koin-annotations = "2.0.0"
+koin-compiler = "2.0.0"
 kotlinx-coroutines = "1.10.1"
 kotlinx-datetime = "0.6.2"
 ksp = "2.1.10-1.0.30"
@@ -12,6 +13,7 @@ room = "2.7.0-rc02"
 [libraries]
 koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotations" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-compiler" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
