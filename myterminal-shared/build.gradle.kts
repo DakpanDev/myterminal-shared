@@ -1,3 +1,4 @@
+
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
@@ -18,15 +19,20 @@ kotlin {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64(),
+    ).forEach {
+        it.binaries.framework {
+            baseName = "Shared"
+        }
+    }
 
     sourceSets {
         val commonMain by getting {
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
             dependencies {
-                api(project(":myterminal-domain"))
                 api(project(":myterminal-data"))
             }
         }
@@ -50,6 +56,9 @@ android {
 }
 
 dependencies {
+
+    // Project
+    commonMainApi(project(":myterminal-domain"))
 
     // Koin
     commonMainApi(shared.koin.annotations)
