@@ -5,6 +5,7 @@ plugins {
     alias(shared.plugins.kotlin.multiplatform)
     alias(shared.plugins.android.library)
     alias(shared.plugins.ksp)
+    alias(shared.plugins.skie)
 }
 
 kotlin {

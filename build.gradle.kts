@@ -5,4 +5,5 @@ plugins {
     alias(shared.plugins.kotlin.multiplatform) apply false
     alias(shared.plugins.android.library) apply false
     alias(shared.plugins.jetbrains.kotlin.jvm) apply false
+    alias(shared.plugins.skie) apply false
 }
