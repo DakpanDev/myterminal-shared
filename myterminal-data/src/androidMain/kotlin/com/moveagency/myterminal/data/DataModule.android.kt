@@ -2,6 +2,7 @@ package com.moveagency.myterminal.data
 
 import android.content.Context
 import androidx.room.Room
+import androidx.sqlite.driver.AndroidSQLiteDriver
 import com.moveagency.myterminal.data.database.Converters
 import com.moveagency.myterminal.data.database.MyTerminalDatabase
 import io.ktor.client.HttpClient
@@ -25,11 +26,12 @@ actual class DataModule {
     }
 
     @Factory
-    fun myTerminalDatabase(context: Context, converters: Converters) = Room.databaseBuilder(
-        context,
-        MyTerminalDatabase::class.java,
-        MyTerminalDatabase.DatabaseName,
-    )
-        .addTypeConverter(converters)
-        .build()
+    fun myTerminalDatabase(context: Context, converters: Converters) =
+        Room.databaseBuilder<MyTerminalDatabase>(
+            context = context.applicationContext,
+            name = context.applicationContext.getDatabasePath("my_room.db").absolutePath,
+        )
+            .addTypeConverter(converters)
+            .setDriver(AndroidSQLiteDriver())
+            .build()
 }

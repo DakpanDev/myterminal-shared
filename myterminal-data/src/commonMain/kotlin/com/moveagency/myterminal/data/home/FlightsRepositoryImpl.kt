@@ -38,7 +38,7 @@ class FlightsRepositoryImpl(
         flightsDatastore.incrementPage(date)
     }
 
-    override suspend fun observeFlights(date: LocalDate): Flow<List<Flight>> {
+    override fun observeFlights(date: LocalDate): Flow<List<Flight>> {
         return flightsDatastore.observeFlights().flatMapLatest {
             val flights = it[date]
             if (!flights.isNullOrEmpty()) {
@@ -58,11 +58,15 @@ class FlightsRepositoryImpl(
         }
     }
 
-    override suspend fun observeAllBookmarks() = flightsDatastore.observeBookmarks()
+    override fun observeAllBookmarks() = flow {
+        flightsDatastore.observeBookmarks().collect { emit(it) }
+    }
 
-    override suspend fun observeBookmark(id: String) = flightsDatastore.observeBookmarks().flatMapLatest {
-        val flight = it.firstOrNull { flight -> flight.id == id }
-        if (flight != null) flow { emit(flight) } else emptyFlow()
+    override fun observeBookmark(id: String): Flow<Flight> = flow {
+        flightsDatastore.observeBookmarks().collect {
+            val flight = it.firstOrNull { flight -> flight.id == id }
+            if (flight != null) emit(flight)
+        }
     }
 
     override suspend fun bookmarkFlight(id: String) {

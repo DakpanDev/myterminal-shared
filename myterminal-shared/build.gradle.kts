@@ -6,6 +6,7 @@ plugins {
     alias(shared.plugins.kotlin.multiplatform)
     alias(shared.plugins.android.library)
     alias(shared.plugins.ksp)
+    alias(shared.plugins.skie)
 }
 
 kotlin {
@@ -26,6 +27,8 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "Shared"
+            linkerOpts.add("-lsqlite3")
+            export(project(":myterminal-domain"))
         }
     }
 
